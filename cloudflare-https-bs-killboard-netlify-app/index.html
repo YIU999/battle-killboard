@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b14">
+  <title>Battle Killboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div id="authOverlay" class="auth-overlay">
+    <section class="auth-card">
+      <div class="eyebrow">BATTLE KILLBOARD</div>
+      <h1 id="authTitle">Sign in</h1>
+      <p id="authDescription">Sign in to load your saved member list.</p>
+      <form id="authForm">
+        <label for="usernameInput">User ID</label>
+        <input id="usernameInput" autocomplete="username" minlength="3" maxlength="32" required placeholder="User ID">
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" autocomplete="current-password" minlength="8" maxlength="128" required placeholder="At least 8 characters">
+        <button id="authSubmit" class="primary auth-submit" type="submit">Sign in</button>
+      </form>
+      <button id="authModeButton" class="auth-switch" type="button">Create a new account</button>
+      <div id="authStatus" class="status" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <main id="appShell" class="shell hidden">
+    <header class="hero">
+      <div class="user-bar">
+        <span>Signed in as <strong id="currentUser"></strong></span>
+        <button id="logoutButton" class="ghost" type="button">Sign out</button>
+      </div>
+      <div class="eyebrow">ALBION EAST</div>
+      <h1>BATTLE <span>KILLBOARD</span></h1>
+      <p>Track Kill, Death, and Fame for your saved members.</p>
+    </header>
+
+    <section class="panel search-panel">
+      <div class="section-heading">
+        <div><span class="label">BATTLE REPORT</span><h2>Load Battle</h2></div>
+        <a href="https://east.albionbb.com/" target="_blank" rel="noreferrer">east.albionbb.com ↗</a>
+      </div>
+      <form id="searchForm" class="search-row">
+        <input id="battleInput" autocomplete="off" value="https://east.albionbb.com/battles/480447628" placeholder="Battle URL or Battle ID" aria-label="Battle URL or ID">
+        <button class="primary" type="submit">Search</button>
+      </form>
+
+      <div class="member-manager">
+        <div class="manager-heading">
+          <div>
+            <label for="memberInput">Saved Members</label>
+            <small>Only saved members are displayed. Your list is synced to your account.</small>
+          </div>
+          <button id="clearPlayersButton" class="ghost danger" type="button">Remove all</button>
+        </div>
+        <form id="memberForm" class="member-add-row">
+          <input id="memberInput" autocomplete="off" placeholder="Character name" aria-label="Character name">
+          <button class="add-button" type="submit">+ Add member</button>
+        </form>
+        <div id="memberList" class="member-list"></div>
+        <div class="filter-actions"><button id="shareButton" class="ghost" type="button">Copy share link</button></div>
+      </div>
+      <div id="status" class="status" aria-live="polite"></div>
+    </section>
+
+    <section id="overviewPanel" class="panel hidden">
+      <div class="section-heading compact">
+        <div><span class="label">BATTLE OVERVIEW</span><h2 id="battleLabel">Battle Overview</h2></div>
+        <div class="toolbar">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-view="alliances" type="button">Alliances</button>
+            <button class="tab" data-view="guilds" type="button">Guilds</button>
+          </div>
+          <button id="refreshButton" class="refresh" type="button">↻ Refresh</button>
+        </div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th id="groupHeader">Alliance</th><th>Players</th><th>Kill</th><th>Death</th><th>Fame</th></tr></thead>
+        <tbody id="overviewBody"></tbody>
+      </table></div>
+      <div id="updatedAt" class="updated"></div>
+    </section>
+
+    <section id="playersPanel" class="panel hidden">
+      <div class="section-heading compact">
+        <div><span class="label">MEMBER PERFORMANCE</span><h2 id="playersTitle">Saved Members</h2></div>
+        <div class="toolbar">
+          <div id="totals" class="totals"></div>
+          <button id="saveButton" class="save" type="button">Save PNG</button>
+        </div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Kill</th><th>Death</th><th>Fame</th></tr></thead>
+        <tbody id="playersBody"></tbody>
+      </table></div>
+    </section>
+  </main>
+</body>
+</html>
